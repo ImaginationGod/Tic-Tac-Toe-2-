@@ -1,0 +1,237 @@
+<!-- Tic Tac Toe -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        .poppins-regular{
+            font-family: "Poppins", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        body{
+            background-color:cornflowerblue;
+        }
+        .title{
+            color: white;
+            text-align: center;
+        }
+        .title:hover{
+            cursor: default;
+        }
+        .box{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width:fit-content;
+            height: fit-content;
+            /* background-color: blueviolet; */
+        }
+        .left{
+            position: relative;
+            top: 184.5px;
+            left: -3%;
+        }
+        .left h1{
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+        }
+        .right{
+            position: relative;
+            top: 184.5px;
+            left: 3%;
+            justify-content: center;
+            align-items: center;
+        }
+        .right h1{
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+        }
+        .container{
+            background-color: rgb(23, 24, 39);
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+        .row{
+            display: flex;
+        }
+        .block{
+            height: 120px;
+            width: 120px;
+            border-radius: 10px;
+            background-color: rgb(27, 36, 68);
+            margin: 5px 5px;
+            font-size: x-large;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+        .block h1{
+            position: relative;
+            height: fit-content;
+            width: fit-content;
+            top: 25%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .block:hover{
+            background-color: rgb(61, 70, 102);
+            cursor: pointer;
+        }
+        .block2{
+            height: 100px;
+            width: 100px;
+            border-radius: 10px;
+            background-color: rgb(27, 36, 68);
+            margin: 5px 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+        .block2:hover{
+            cursor: pointer;
+            background-color: rgb(55, 68, 117);
+        }
+        .left_gap{
+            margin-left: 20px;
+        }
+        .right_gap{
+            margin-right: 20px;
+        }
+        .bottom_gap{
+            margin-bottom: 20px;;
+        }
+        .btn{
+            height: 60px;
+            width: 60px;
+            border-radius: 35px;
+            background-color: black;
+            border: 0px;
+            position: absolute;
+            top: 2%;
+            left: 89%;
+            border: 4px solid black;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);
+            color: white;
+            font-size: x-large;
+            font-weight: 700;
+        }
+        .btn:hover{
+            cursor: pointer;
+            background-color: darkorange;
+            border: 4px solid rgb(255, 102, 0);
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="left poppins-regular">
+            <div class="block2" id="p1" style="font-size: x-large;" onclick="xinput()"><h1 style="color: blue">X</h1></div>
+        </div>
+        <div class="container poppins-regular">
+            <h1 class="title" id="txt">Tic Tac Toe</h1>
+            <div class="row">
+                <div class="block left_gap" id="1" onclick="mark(event)"><h1></h1></div>
+                <div class="block" id="2" onclick="mark(event)"><h1></h1></div>
+                <div class="block right_gap" id="3" onclick="mark(event)"><h1></h1></div>
+            </div>
+            <div class="row">
+                <div class="block left_gap" id="4" onclick="mark(event)"><h1></h1></div>
+                <div class="block" id="5" onclick="mark(event)"><h1></h1></div>
+                <div class="block right_gap" id="6" onclick="mark(event)"><h1></h1></div>
+            </div>
+            <div class="row">
+                <div class="block left_gap bottom_gap" id="7" onclick="mark(event)"><h1></h1></div>
+                <div class="block bottom_gap" id="8" onclick="mark(event)"><h1></h1></div>
+                <div class="block right_gap bottom_gap" id="9" onclick="mark(event)"><h1></h1></div>
+            </div>
+        </div>
+        <div class="right poppins-regular">
+            <div class="block2" id="p2" style="font-size:x-large;" onclick="oinput()"><h1 style="color: red;">O</h1></div>
+        </div>
+        <button type="button" class="btn poppins-regular" onclick="refresh()">R</button>
+    </div>
+    <script>
+        let current_var = ""; //Stores: X/O
+        let color = "white";
+        let arr = []; //For storing value at each block
+        let b = -1; //No result
+        count = 0; //No. of turns
+
+        let block_value = ()=>{
+            for(let i=1;i<=9;i++){
+                arr.push(i);
+            }
+        }
+        block_value();
+        let compare = ()=>{
+            for(let i=0;i<9;i+=3){
+                if(arr[i]==arr[i+1] && arr[i+1]==arr[i+2]){
+                    if(arr[i+2]=="X"){return [i, i+1, i+2, 'X'];} //[index..., X/O];
+                    else{return [i, i+1, i+2, 'O'];} //[index..., X/O];
+                }
+            }
+            for(let i=0;i<3;i++){
+                if(arr[i]==arr[i+3] && arr[i+3]==arr[i+6]){
+                    if(arr[i+6]=="X"){return [i, i+3, i+6, 'X'];} 
+                    else{return [i, i+3, i+6, 'O'];}
+                }
+            }
+            if((arr[0]==arr[4] && arr[4]==arr[8])){
+                if(arr[4]=="X"){return [0, 4, 8, 'X'];}
+                else{return [0, 4, 8, 'O'];}
+            }
+            else if((arr[2]==arr[4] && arr[4]==arr[6])){
+                if(arr[4]=="X"){return [2, 4, 6, 'X'];}
+                else{return [2, 4, 6, 'O'];}
+            }
+            else{return -1;}
+        }
+        let xinput = ()=>{
+            current_var = "X";
+            color = "blue";
+        }
+        let oinput = ()=>{
+            current_var = "O";
+            color = "red";
+        }
+        let mark = (event)=>{
+            let a = document.getElementById(event.target.id);
+            let t = document.getElementById('txt');
+            a.innerHTML = `<h1 style="color: ${color};">${current_var}</h1>`;
+            arr[Number.parseInt(event.target.id)-1] = `${current_var}`;
+            current_var = "";
+            count++;
+            b = compare();
+            if(b[0]>=0){
+                let text_color = "white";
+                document.getElementById(b[0] + 1).style.backgroundColor =  "rgb(61, 70, 102)";
+                document.getElementById(b[1] + 1).style.backgroundColor =  "rgb(61, 70, 102)";
+                document.getElementById(b[2] + 1).style.backgroundColor =  "rgb(61, 70, 102)";
+                t.innerText = `${b[3]} Wins!`;
+                if(b[3]=="X"){text_color = "blue";}
+                else{text_color = "red";}
+                t.style.color = text_color;
+            }
+            else if(count==9){
+                t.innerText = "Draw!";
+                t.style.color = "yellow";
+            }
+        }
+        let refresh = ()=>{
+            location.reload();
+        }
+    </script>
+</body>
+</html>
